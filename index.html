@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arvon Brewing Co. | Grand Rapids, MI</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-card: #161616;
+    --bg-card-hover: #1c1c1c;
+    --text-primary: #f0ece4;
+    --text-secondary: #8a8578;
+    --text-muted: #5a5650;
+    --accent-gold: #d4a843;
+    --accent-amber: #e8943a;
+    --accent-haze: #f0c95c;
+    --accent-sour-pink: #e84d8a;
+    --accent-sour-purple: #9b59b6;
+    --accent-teal: #2dd4a8;
+    --border-subtle: rgba(240, 236, 228, 0.06);
+    --border-accent: rgba(212, 168, 67, 0.3);
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+    --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: var(--grain);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ===== NAVIGATION ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 3rem;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
+    transition: all 0.4s ease;
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    letter-spacing: 0.15em;
+    color: var(--text-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .nav-logo .logo-dot {
+    width: 8px; height: 8px;
+    background: var(--accent-gold);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a:hover { color: var(--text-primary); }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--accent-gold);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    padding: 0.55rem 1.4rem !important;
+    background: var(--accent-gold) !important;
+    color: var(--bg-primary) !important;
+    border-radius: 4px;
+    font-weight: 700 !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.1em !important;
+    transition: all 0.3s !important;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent-haze) !important;
+    transform: translateY(-1px);
+  }
+
+  .nav-cta::after { display: none !important; }
+
+  /* Mobile menu toggle */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    margin: 5px 0;
+    transition: all 0.3s;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 0 3rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 20% 50%, rgba(212, 168, 67, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 30%, rgba(232, 77, 138, 0.05) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 40% at 50% 100%, rgba(45, 212, 168, 0.04) 0%, transparent 60%),
+      var(--bg-primary);
+  }
+
+  /* Animated haze particles */
+  .hero-haze {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.12;
+    animation: float 20s ease-in-out infinite;
+  }
+
+  .hero-haze:nth-child(1) {
+    width: 500px; height: 500px;
+    background: var(--accent-gold);
+    top: 10%; left: -10%;
+    animation-delay: 0s;
+  }
+
+  .hero-haze:nth-child(2) {
+    width: 400px; height: 400px;
+    background: var(--accent-sour-pink);
+    top: 50%; right: -5%;
+    animation-delay: -7s;
+  }
+
+  .hero-haze:nth-child(3) {
+    width: 300px; height: 300px;
+    background: var(--accent-teal);
+    bottom: 5%; left: 30%;
+    animation-delay: -13s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -30px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.5s;
+  }
+
+  .hero-title .title-accent {
+    display: block;
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-amber), var(--accent-haze));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.7s;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.9s;
+  }
+
+  .btn-primary {
+    padding: 0.85rem 2.2rem;
+    background: var(--accent-gold);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-haze);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(212, 168, 67, 0.25);
+  }
+
+  .btn-secondary {
+    padding: 0.85rem 2.2rem;
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-accent);
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent-gold);
+    background: rgba(212, 168, 67, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+
+  .hero-scroll-hint span {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent-gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.7); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== QUICK INFO BAR ===== */
+  .info-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-secondary);
+  }
+
+  .info-bar-item {
+    padding: 2rem 2rem;
+    text-align: center;
+    border-right: 1px solid var(--border-subtle);
+    transition: background 0.3s;
+  }
+
+  .info-bar-item:last-child { border-right: none; }
+  .info-bar-item:hover { background: var(--bg-card); }
+
+  .info-bar-item .label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .info-bar-item .value {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+  }
+
+  .info-bar-item .sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    padding: 6rem 3rem;
+    position: relative;
+  }
+
+  .section-header {
+    margin-bottom: 4rem;
+  }
+
+  .section-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 0.05em;
+    line-height: 1;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-top: 0.75rem;
+    font-weight: 400;
+  }
+
+  /* ===== TAP LIST ===== */
+  .tap-list-section {
+    background: var(--bg-primary);
+  }
+
+  .tap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .beer-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 1.8rem;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .beer-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--accent-gold));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .beer-card:hover {
+    border-color: rgba(212, 168, 67, 0.15);
+    background: var(--bg-card-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .beer-card:hover::before { opacity: 1; }
+
+  .beer-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .beer-style-badge {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 3px;
+    background: rgba(212, 168, 67, 0.1);
+    color: var(--accent-gold);
+    border: 1px solid rgba(212, 168, 67, 0.15);
+    white-space: nowrap;
+  }
+
+  .beer-abv {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .beer-name {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.6rem;
+    line-height: 1.1;
+  }
+
+  .beer-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .beer-flavor-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1rem;
+  }
+
+  .flavor-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    background: rgba(240, 236, 228, 0.04);
+    color: var(--text-muted);
+    border: 1px solid rgba(240, 236, 228, 0.06);
+  }
+
+  /* Beer card color variants */
+  .beer-card.ipa { --card-accent: #f0c95c; }
+  .beer-card.sour { --card-accent: #e84d8a; }
+  .beer-card.sour .beer-style-badge {
+    background: rgba(232, 77, 138, 0.1);
+    color: var(--accent-sour-pink);
+    border-color: rgba(232, 77, 138, 0.15);
+  }
+  .beer-card.stout { --card-accent: #a0785a; }
+  .beer-card.stout .beer-style-badge {
+    background: rgba(160, 120, 90, 0.12);
+    color: #c89a6a;
+    border-color: rgba(160, 120, 90, 0.2);
+  }
+  .beer-card.lager { --card-accent: var(--accent-teal); }
+  .beer-card.lager .beer-style-badge {
+    background: rgba(45, 212, 168, 0.08);
+    color: var(--accent-teal);
+    border-color: rgba(45, 212, 168, 0.15);
+  }
+
+  /* ===== EVENTS ===== */
+  .events-section {
+    background: var(--bg-secondary);
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .event-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+
+  .event-card:hover {
+    border-color: rgba(212, 168, 67, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 50px rgba(0,0,0,0.25);
+  }
+
+  .event-card.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  .event-visual {
+    aspect-ratio: 16/10;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .event-visual-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .featured .event-visual { aspect-ratio: auto; min-height: 280px; }
+
+  .ev-anniversary .event-visual-bg {
+    background: linear-gradient(135deg, #1a1205 0%, #2d1a08 50%, #1a0d1a 100%);
+  }
+
+  .ev-sour .event-visual-bg {
+    background: linear-gradient(135deg, #1a0515 0%, #200a1f 50%, #0a1520 100%);
+  }
+
+  .ev-euchre .event-visual-bg {
+    background: linear-gradient(135deg, #0a1a15 0%, #0d1f18 50%, #051a15 100%);
+  }
+
+  .ev-hopfest .event-visual-bg {
+    background: linear-gradient(135deg, #1a1505 0%, #1f1a08 50%, #1a1205 100%);
+  }
+
+  .event-visual-icon {
+    position: relative;
+    z-index: 1;
+    font-size: 3.5rem;
+    opacity: 0.6;
+  }
+
+  .featured .event-visual-icon { font-size: 5rem; }
+
+  .event-content {
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .event-date {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+  }
+
+  .event-name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+  }
+
+  .featured .event-name { font-size: 2rem; }
+
+  .event-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .event-tag {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.8rem;
+    border-radius: 3px;
+    background: rgba(212, 168, 67, 0.08);
+    color: var(--accent-gold);
+    border: 1px solid rgba(212, 168, 67, 0.12);
+    width: fit-content;
+  }
+
+  /* ===== VISIT / TAPROOM ===== */
+  .visit-section {
+    background: var(--bg-primary);
+  }
+
+  .visit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .visit-info { padding-top: 1rem; }
+
+  .visit-detail {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .visit-detail:last-child { border-bottom: none; }
+
+  .visit-detail-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+  }
+
+  .visit-detail-value {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+  }
+
+  .visit-detail-value a {
+    color: var(--accent-gold);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .visit-detail-value a:hover { color: var(--accent-haze); }
+
+  .hours-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.3rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .hours-day { color: var(--text-secondary); }
+  .hours-time { color: var(--text-primary); font-weight: 500; }
+  .hours-closed { color: var(--text-muted); }
+
+  .visit-visual {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: linear-gradient(160deg, #1a1510, #201812, #151210);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .visit-visual-content {
+    text-align: center;
+    padding: 3rem;
+  }
+
+  .visit-visual-icon { font-size: 5rem; margin-bottom: 1.5rem; opacity: 0.5; }
+
+  .visit-visual-text {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .visit-visual-sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  .food-notice {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(212, 168, 67, 0.04);
+    border: 1px solid rgba(212, 168, 67, 0.1);
+    border-radius: 8px;
+  }
+
+  .food-notice-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    color: var(--accent-gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .food-notice p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ===== OUR STORY ===== */
+  .story-section {
+    background: var(--bg-secondary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .story-section::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(212, 168, 67, 0.04) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .story-content {
+    max-width: 700px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .story-content p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+  }
+
+  .story-content p:first-of-type::first-letter {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    float: left;
+    line-height: 1;
+    margin-right: 0.5rem;
+    margin-top: 0.1rem;
+    color: var(--accent-gold);
+  }
+
+  .story-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .story-stat-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    letter-spacing: 0.05em;
+    color: var(--accent-gold);
+    line-height: 1;
+  }
+
+  .story-stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+  }
+
+  /* ===== BREW CREW ===== */
+  .brewcrew-section {
+    background: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .brewcrew-banner {
+    background: linear-gradient(135deg, rgba(212, 168, 67, 0.06), rgba(232, 148, 58, 0.04), rgba(232, 77, 138, 0.03));
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .brewcrew-banner::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(212, 168, 67, 0.06) 0%, transparent 60%);
+    border-radius: 50%;
+  }
+
+  .brewcrew-info { position: relative; z-index: 1; }
+
+  .brewcrew-info h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .brewcrew-info p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .brewcrew-perks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .perk-item {
+    background: rgba(10, 10, 10, 0.5);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .perk-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+
+  .perk-title {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  .perk-desc {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ===== FIND OUR BEER ===== */
+  .find-section {
+    background: var(--bg-secondary);
+  }
+
+  .find-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .find-content p {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .find-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 4rem 3rem 2rem;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-primary);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .footer-brand p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 300px;
+  }
+
+  .footer-col-title {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.2rem;
+    color: var(--text-primary);
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--accent-gold); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .footer-bottom p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1.2rem;
+  }
+
+  .social-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .social-links a:hover { color: var(--accent-gold); }
+
+  /* ===== AGE GATE OVERLAY ===== */
+  .age-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(10, 10, 10, 0.97);
+    backdrop-filter: blur(30px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+
+  .age-gate.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .age-gate-content {
+    text-align: center;
+    max-width: 400px;
+    padding: 2rem;
+  }
+
+  .age-gate-logo {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+  }
+
+  .age-gate-sub {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+  }
+
+  .age-gate-question {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .age-gate-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .age-gate-buttons button {
+    padding: 0.8rem 2.5rem;
+    border: none;
+    border-radius: 4px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .age-yes {
+    background: var(--accent-gold);
+    color: var(--bg-primary);
+  }
+
+  .age-yes:hover {
+    background: var(--accent-haze);
+    transform: translateY(-2px);
+  }
+
+  .age-no {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle) !important;
+  }
+
+  .age-no:hover { border-color: var(--text-muted) !important; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .events-grid { grid-template-columns: 1fr; }
+    .event-card.featured { grid-template-columns: 1fr; }
+    .visit-grid { grid-template-columns: 1fr; }
+    .brewcrew-banner { grid-template-columns: 1fr; padding: 3rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .menu-toggle { display: block; }
+    
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 0 1.5rem; }
+    
+    .info-bar {
+      grid-template-columns: 1fr 1fr;
+    }
+    .info-bar-item { padding: 1.5rem 1rem; }
+    .info-bar-item:nth-child(2) { border-right: none; }
+    
+    .tap-grid { grid-template-columns: 1fr; }
+    
+    .story-stats { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .story-stat-number { font-size: 2rem; }
+    
+    .brewcrew-banner { padding: 2rem; }
+    .brewcrew-perks { grid-template-columns: 1fr; }
+    
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-actions { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+    .info-bar { grid-template-columns: 1fr; }
+    .info-bar-item { border-right: none; border-bottom: 1px solid var(--border-subtle); }
+    .info-bar-item:last-child { border-bottom: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Age Gate -->
+<div class="age-gate" id="ageGate">
+  <div class="age-gate-content">
+    <div class="age-gate-logo">ARVON <span style="color: var(--accent-gold);">BREWING</span></div>
+    <div class="age-gate-sub">Grand Rapids, Michigan</div>
+    <div class="age-gate-question">Are you at least 21 years of age?</div>
+    <div class="age-gate-buttons">
+      <button class="age-yes" onclick="document.getElementById('ageGate').classList.add('hidden')">Yes, I am</button>
+      <button class="age-no" onclick="window.location.href='https://www.google.com'">No</button>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="logo-dot"></span>
+    ARVON BREWING CO.
+  </a>
+  <ul class="nav-links">
+    <li><a href="#taplist">Tap List</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#visit">Visit</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#brewcrew">Brew Crew</a></li>
+    <li><a href="#find">Find Our Beer</a></li>
+    <li><a href="https://arvonbrewingco.square.site" class="nav-cta">Order Online</a></li>
+  </ul>
+  <button class="menu-toggle" onclick="this.classList.toggle('active')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-haze"></div>
+  <div class="hero-haze"></div>
+  <div class="hero-haze"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Grand Rapids, Michigan &nbsp;·&nbsp; Est. 2016</div>
+    <h1 class="hero-title">
+      CRAFT BEER
+      <span class="title-accent">BREWED FOR ENTHUSIASTS</span>
+    </h1>
+    <p class="hero-subtitle">Bold hazy IPAs, vibrant fruited sours, and rich barrel-aged stouts</p>
+    <div class="hero-actions">
+      <a href="#taplist" class="btn-primary">View Tap List</a>
+      <a href="https://arvonbrewingco.square.site" class="btn-secondary">Order for Pickup</a>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- Info Bar -->
+<div class="info-bar">
+  <div class="info-bar-item">
+    <div class="label">Taproom Hours</div>
+    <div class="value">WED–SAT &nbsp;|&nbsp; SUN</div>
+    <div class="sub">Wed-Thu 4-9p · Fri 3-9p · Sat 12-9p · Sun 1-6p</div>
+  </div>
+  <div class="info-bar-item">
+    <div class="label">Location</div>
+    <div class="value">1006 DIVISION AVE S</div>
+    <div class="sub">Grand Rapids, MI 49507</div>
+  </div>
+  <div class="info-bar-item">
+    <div class="label">New Beers</div>
+    <div class="value">4-5 WEEKLY</div>
+    <div class="sub">Fresh lineup every week</div>
+  </div>
+  <div class="info-bar-item">
+    <div class="label">Online Ordering</div>
+    <div class="value">PICKUP AVAILABLE</div>
+    <div class="sub">New beers drop Thursdays at 8am</div>
+  </div>
+</div>
+
+<!-- Tap List -->
+<section class="tap-list-section" id="taplist">
+  <div class="section-header">
+    <div class="section-eyebrow">What's Pouring</div>
+    <h2 class="section-title">TAP LIST</h2>
+    <p class="section-subtitle">Constantly rotating — 4 to 5 fresh batches every week</p>
+  </div>
+  <div class="tap-grid">
+    <div class="beer-card ipa">
+      <div class="beer-card-header">
+        <span class="beer-style-badge">New England IPA</span>
+        <span class="beer-abv">6.8%</span>
+      </div>
+      <h3 class="beer-name">CITRA DROPS</h3>
+      <p class="beer-description">Our flagship hazy IPA loaded with Citra hops. Bursting with tropical citrus, mango, and a pillowy soft mouthfeel.</p>
+      <div class="beer-flavor-tags">
+        <span class="flavor-tag">Tropical</span>
+        <span class="flavor-tag">Citrus</span>
+        <span class="flavor-tag">Hazy</span>
+      </div>
+    </div>
+
+    <div class="beer-card sour">
+      <div class="beer-card-header">
+        <span class="beer-style-badge">Fruited Sour</span>
+        <span class="beer-abv">5.5%</span>
+      </div>
+      <h3 class="beer-name">FRUIT PUFF</h3>
+      <p class="beer-description">Vibrant kettle sour with layers of tropical fruit. Smoothie-thick with a refreshing tart finish that keeps you coming back.</p>
+      <div class="beer-flavor-tags">
+        <span class="flavor-tag">Fruited</span>
+        <span class="flavor-tag">Tart</span>
+        <span class="flavor-tag">Smoothie</span>
+      </div>
+    </div>
+
+    <div class="beer-card stout">
+      <div class="beer-card-header">
+        <span class="beer-style-badge">Imperial Stout</span>
+        <span class="beer-abv">12.2%</span>
+      </div>
+      <h3 class="beer-name">THE OWLS</h3>
+      <p class="beer-description">Barrel-aged imperial stout. Rich chocolate, vanilla, and oak with a velvety body. Part of our celebrated BA program.</p>
+      <div class="beer-flavor-tags">
+        <span class="flavor-tag">Barrel-Aged</span>
+        <span class="flavor-tag">Chocolate</span>
+        <span class="flavor-tag">Vanilla</span>
+      </div>
+    </div>
+
+    <div class="beer-card ipa">
+      <div class="beer-card-header">
+        <span class="beer-style-badge">Double IPA</span>
+        <span class="beer-abv">8.0%</span>
+      </div>
+      <h3 class="beer-name">DOUBLE HARBOR BEACH</h3>
+      <p class="beer-description">Big, bold double IPA with massive hop presence. Layers of stone fruit, pine resin, and a touch of dank that finishes clean.</p>
+      <div class="beer-flavor-tags">
+        <span class="flavor-tag">Stone Fruit</span>
+        <span class="flavor-tag">Pine</span>
+        <span class="flavor-tag">Bold</span>
+      </div>
+    </div>
+
+    <div class="beer-card sour">
+      <div class="beer-card-header">
+        <span class="beer-style-badge">Fruited Sour</span>
+        <span class="beer-abv">5.2%</span>
+      </div>
+      <h3 class="beer-name">CATCHING RAYS</h3>
+      <p class="beer-description">Sun-kissed fruited sour packed with bright citrus and berry notes. The perfect patio pour for a Michigan afternoon.</p>
+      <div class="beer-flavor-tags">
+        <span class="flavor-tag">Citrus</span>
+        <span class="flavor-tag">Berry</span>
+        <span class="flavor-tag">Refreshing</span>
+      </div>
+    </div>
+
+    <div class="beer-card lager">
+      <div class="beer-card-header">
+        <span class="beer-style-badge">Sparkling Water</span>
+        <span class="beer-abv">0.0%</span>
+      </div>
+      <h3 class="beer-name">MOUNTAIN WATER</h3>
+      <p class="beer-description">Our crisp, refreshing non-alcoholic sparkling water. Because great company deserves a great option for everyone.</p>
+      <div class="beer-flavor-tags">
+        <span class="flavor-tag">Non-Alc</span>
+        <span class="flavor-tag">Crisp</span>
+        <span class="flavor-tag">Clean</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Events -->
+<section class="events-section" id="events">
+  <div class="section-header">
+    <div class="section-eyebrow">What's Happening</div>
+    <h2 class="section-title">UPCOMING EVENTS</h2>
+    <p class="section-subtitle">There's always something brewing at the taproom</p>
+  </div>
+  <div class="events-grid">
+    <div class="event-card featured ev-anniversary">
+      <div class="event-visual">
+        <div class="event-visual-bg"></div>
+        <div class="event-visual-icon">🎉</div>
+      </div>
+      <div class="event-content">
+        <div class="event-date">Friday, February 27th</div>
+        <h3 class="event-name">TAPROOM ANNIVERSARY PARTY</h3>
+        <p class="event-desc">Celebrating another year at our Grand Rapids home! 3 new collab beers with Founders, City Built, and Lost Art — plus 2 barrel-aged The Owls. Pizza Mi will be out front serving up pies.</p>
+        <span class="event-tag">New Releases · Collabs · Food Truck</span>
+      </div>
+    </div>
+
+    <div class="event-card ev-euchre">
+      <div class="event-visual">
+        <div class="event-visual-bg"></div>
+        <div class="event-visual-icon">🃏</div>
+      </div>
+      <div class="event-content">
+        <div class="event-date">Recurring · Thursdays</div>
+        <h3 class="event-name">EUCHRE TOURNAMENT</h3>
+        <p class="event-desc">Up to 16 teams of 2 battle it out. Winners take home $25 Arvon gift cards. Sign up in the taproom or email us.</p>
+        <span class="event-tag">Competition · Prizes</span>
+      </div>
+    </div>
+
+    <div class="event-card ev-hopfest">
+      <div class="event-visual">
+        <div class="event-visual-bg"></div>
+        <div class="event-visual-icon">🌿</div>
+      </div>
+      <div class="event-content">
+        <div class="event-date">Saturday, May 10th</div>
+        <h3 class="event-name">HOP FEST</h3>
+        <p class="event-desc">A celebration of everything hazy and hopped. Featuring an array of our Michigan-famous hazy IPAs plus Mountain Water for the hop-loving non-drinkers.</p>
+        <span class="event-tag">IPA Lovers · Festival</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Visit -->
+<section class="visit-section" id="visit">
+  <div class="section-header">
+    <div class="section-eyebrow">Come Through</div>
+    <h2 class="section-title">VISIT THE TAPROOM</h2>
+    <p class="section-subtitle">A former Oldsmobile dealership turned craft beer destination</p>
+  </div>
+  <div class="visit-grid">
+    <div class="visit-info">
+      <div class="visit-detail">
+        <div class="visit-detail-label">Hours</div>
+        <div class="hours-grid">
+          <span class="hours-day">Monday</span><span class="hours-closed">Closed</span>
+          <span class="hours-day">Tuesday</span><span class="hours-closed">Closed</span>
+          <span class="hours-day">Wednesday</span><span class="hours-time">4:00 – 9:00 PM</span>
+          <span class="hours-day">Thursday</span><span class="hours-time">4:00 – 9:00 PM</span>
+          <span class="hours-day">Friday</span><span class="hours-time">3:00 – 9:00 PM</span>
+          <span class="hours-day">Saturday</span><span class="hours-time">12:00 – 9:00 PM</span>
+          <span class="hours-day">Sunday</span><span class="hours-time">1:00 – 6:00 PM</span>
+        </div>
+      </div>
+      <div class="visit-detail">
+        <div class="visit-detail-label">Location</div>
+        <div class="visit-detail-value">
+          1006 Division Avenue South<br>
+          Grand Rapids, MI 49507<br><br>
+          <a href="https://maps.google.com/?q=1006+Division+Ave+S+Grand+Rapids+MI" target="_blank">Get Directions →</a>
+        </div>
+      </div>
+      <div class="visit-detail">
+        <div class="visit-detail-label">Contact</div>
+        <div class="visit-detail-value">
+          <a href="tel:6163409372">(616) 340-9372</a><br>
+          <a href="mailto:info@arvonbrewingco.com">info@arvonbrewingco.com</a>
+        </div>
+      </div>
+      <div class="food-notice">
+        <div class="food-notice-title">🥨 BRING YOUR OWN FOOD</div>
+        <p>We serve Bavarian pretzels and popcorn in the taproom. Feel free to bring your own food, order delivery, or catch one of our food truck partners during events. We're all about the beer — you handle dinner.</p>
+      </div>
+    </div>
+    <div class="visit-visual">
+      <div class="visit-visual-content">
+        <div class="visit-visual-icon">🍺</div>
+        <div class="visit-visual-text">5,000 SQ FT</div>
+        <div class="visit-visual-sub">of craft beer paradise</div>
+        <div style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase;">
+          Modern · Cozy · Communal Tables<br>
+          Outdoor Patio · Dog Friendly
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 2rem; text-align: center;">
+    <p style="font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 0.5rem;">Industry Discount</p>
+    <p style="font-size: 0.9rem; color: var(--text-secondary);">Work in the service industry? Join us for <strong style="color: var(--text-primary);">Industry Sundays</strong> — discounted full pours every Sunday.</p>
+  </div>
+</section>
+
+<!-- Our Story -->
+<section class="story-section" id="story">
+  <div class="section-header">
+    <div class="section-eyebrow">Who We Are</div>
+    <h2 class="section-title">OUR STORY</h2>
+    <p class="section-subtitle">From a 700 sq ft garage to Grand Rapids' favorite taproom</p>
+  </div>
+  <div class="story-content">
+    <p>Born from backyard homebrewing and a shared sense of adventure, Arvon Brewing Co. started in 2016 when Jacob paired his passion for bold flavors with Brett's business know-how. What began as a family dream took shape in a tiny 700 square foot production space in Grandville, Michigan — no taproom, no frills, just great beer.</p>
+    <p>For 18 months, Arvon brewed and canned out of that small space, shipping beer to stores across Metro Detroit and building a loyal following one hazy IPA at a time. Word spread. Shelves cleared. The buzz was real.</p>
+    <p>In February 2020, they opened the doors to their Grand Rapids taproom — a beautifully converted 1948 Oldsmobile dealership on Division Avenue. The space already had the bones of a brewery (floor drains, plumbing, heavy-duty electrical), and the team turned it into something special: a modern, welcoming space where the beer speaks for itself.</p>
+    <p>Today, Arvon releases 4-5 fresh batches every week, from their celebrated New England IPAs and smoothie-thick fruited sours to a barrel-aged stout program that's earned a reputation across the state. Every beer is crafted to excite — and every visit feels like coming home.</p>
+  </div>
+  <div class="story-stats">
+    <div>
+      <div class="story-stat-number">2016</div>
+      <div class="story-stat-label">Founded</div>
+    </div>
+    <div>
+      <div class="story-stat-number">4-5</div>
+      <div class="story-stat-label">Fresh batches / week</div>
+    </div>
+    <div>
+      <div class="story-stat-number">8K+</div>
+      <div class="story-stat-label">Instagram community</div>
+    </div>
+  </div>
+</section>
+
+<!-- Brew Crew -->
+<section class="brewcrew-section" id="brewcrew">
+  <div class="brewcrew-banner">
+    <div class="brewcrew-info">
+      <div class="section-eyebrow">Exclusive Membership</div>
+      <h2>JOIN THE<br>BREW CREW</h2>
+      <p>Our inner circle of craft beer enthusiasts. Get exclusive access to limited releases, experimental beers you won't find anywhere else, and quarterly allocations delivered straight to you.</p>
+      <a href="https://www.arvonbrewingco.com/brewcrewdetails" class="btn-primary">Learn More & Join</a>
+    </div>
+    <div class="brewcrew-perks">
+      <div class="perk-item">
+        <div class="perk-icon">📦</div>
+        <div class="perk-title">QUARTERLY ALLOCATIONS</div>
+        <div class="perk-desc">12 cans (16oz) of curated limited & experimental beers</div>
+      </div>
+      <div class="perk-item">
+        <div class="perk-icon">🥇</div>
+        <div class="perk-title">EARLY ACCESS</div>
+        <div class="perk-desc">Be the first to try new releases before anyone else</div>
+      </div>
+      <div class="perk-item">
+        <div class="perk-icon">🎉</div>
+        <div class="perk-title">MEMBER PARTIES</div>
+        <div class="perk-desc">Exclusive events with food trucks, +1 access, & unique glass</div>
+      </div>
+      <div class="perk-item">
+        <div class="perk-icon">🍺</div>
+        <div class="perk-title">MEMBERS ONLY</div>
+        <div class="perk-desc">Beers brewed exclusively for Brew Crew members</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Find Our Beer -->
+<section class="find-section" id="find">
+  <div class="find-content">
+    <div class="section-eyebrow" style="text-align:center;">Off-Premise</div>
+    <h2 class="section-title" style="text-align:center; margin-bottom: 1rem;">FIND OUR BEER</h2>
+    <p>Can't make it to the taproom? Find Arvon on shelves at retailers across Michigan. From your neighborhood bottle shop to your favorite grocery store — we're closer than you think.</p>
+    <div class="find-actions">
+      <a href="https://www.arvonbrewingco.com/findourbeer" class="btn-primary">View Retailers</a>
+      <a href="https://arvonbrewingco.square.site" class="btn-secondary">Order for Pickup</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <span class="logo-dot" style="width:6px;height:6px;background:var(--accent-gold);border-radius:50%;display:inline-block;"></span>
+        ARVON BREWING CO.
+      </div>
+      <p>Craft beer, brewed for enthusiasts. Bold hazy IPAs, vibrant fruited sours, and rich barrel-aged stouts from Grand Rapids, Michigan.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">TAPROOM</div>
+      <ul class="footer-links">
+        <li><a href="#taplist">Tap List</a></li>
+        <li><a href="#visit">Visit Us</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="https://www.arvonbrewingco.com/faqs">FAQs</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">SHOP</div>
+      <ul class="footer-links">
+        <li><a href="https://arvonbrewingco.square.site">Order for Pickup</a></li>
+        <li><a href="https://squareup.com/gift/ESNS2PGKZJ4KE/order">Gift Cards</a></li>
+        <li><a href="#find">Find Our Beer</a></li>
+        <li><a href="#brewcrew">Brew Crew</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">CONNECT</div>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/arvonbrewingco/">Instagram</a></li>
+        <li><a href="https://www.facebook.com/arvonbrewingco/">Facebook</a></li>
+        <li><a href="https://untappd.com/ArvonBrewingCo">Untappd</a></li>
+        <li><a href="mailto:info@arvonbrewingco.com">Email Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Arvon Brewing Co. All rights reserved. Please drink responsibly.</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/arvonbrewingco/">IG</a>
+      <a href="https://www.facebook.com/arvonbrewingco/">FB</a>
+      <a href="https://untappd.com/ArvonBrewingCo">Untappd</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Nav background on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      nav.style.background = 'rgba(10, 10, 10, 0.95)';
+      nav.style.borderBottomColor = 'rgba(212, 168, 67, 0.08)';
+    } else {
+      nav.style.background = 'rgba(10, 10, 10, 0.85)';
+      nav.style.borderBottomColor = 'rgba(240, 236, 228, 0.06)';
+    }
+  });
+
+  // Staggered reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = `${index * 0.08}s`;
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.beer-card, .event-card, .visit-detail, .perk-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
